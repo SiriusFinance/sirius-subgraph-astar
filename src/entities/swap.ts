@@ -4,7 +4,6 @@ import { Swap } from "../../generated/schema"
 import { SwapNormal } from "../../generated/SiriusUSDPool/SwapNormal"
 import { getOrCreateToken } from "./token"
 import { getSystemInfo } from "./system"
-import { MetaSwap } from "../../generated/SUSDMetaPool/MetaSwap"
 
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
