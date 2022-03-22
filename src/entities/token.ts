@@ -1,6 +1,6 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts"
 
-import { ERC20 } from "../../generated/USDPool/ERC20"
+import { ERC20 } from "../../generated/SiriusUSDPool/ERC20"
 import { Token } from "../../generated/schema"
 import { getSystemInfo } from "./system"
 
