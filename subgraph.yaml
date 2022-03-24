@@ -53,3 +53,25 @@ dataSources:
         - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
           handler: handleTokenSwap
       file: ./src/mappings/swapNormal.ts
+  
+  - kind: ethereum/contract
+    name: VotingEscrow
+    network: mainnet
+    source:
+      address: "0xDb546C9D5Cf7C439e292b1Fa90EBC2ca9D6E47AF"
+      abi: VotingEscrow
+      startBlock: 1082000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Lock
+        - LockSystemInfo
+      abis:
+        - name: VotingEscrow
+          file: ./abis/VotingEscrow.json
+      eventHandlers:
+        - event: Deposit(indexed address,uint256,indexed uint256,int128,uint256)
+          handler: handleDeposit
+      file: ./src/mappings/votingEscrow.ts

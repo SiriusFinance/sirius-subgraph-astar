@@ -234,3 +234,20 @@ type Token @entity {
   name: String
   symbol: String
 }
+
+type Lock @entity {
+  id: ID!
+  address: Bytes!
+  amount: BigInt!
+  end: BigInt!
+}
+
+type LockSystemInfo @entity {
+  id: ID!
+  lockCount: BigInt!
+  averageLockTime: BigInt!
+
+  updated: BigInt!
+  updatedAtBlock: BigInt!
+  updatedAtTransaction: Bytes
+}
