@@ -7,9 +7,9 @@ dataSources:
     name: SiriusUSDPool
     network: mainnet
     source:
-      address: "0x5Eed03a4a94D820044214da7568258d7e15F02B3"
+      address: "0xb26Ca3a7858dBfeCe00D42d8d8ddA3307707e3b1"
       abi: SwapNormal
-      startBlock: 1082000
+      startBlock: 1100000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -58,9 +58,9 @@ dataSources:
     name: VotingEscrow
     network: mainnet
     source:
-      address: "0xDb546C9D5Cf7C439e292b1Fa90EBC2ca9D6E47AF"
+      address: "0x30F038635c085C5BcD80F50157FC48aEF46f5Fef"
       abi: VotingEscrow
-      startBlock: 1082000
+      startBlock: 1100000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
