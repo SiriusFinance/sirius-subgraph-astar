@@ -33,7 +33,7 @@ type Swap @entity {
 
   swapFee: BigInt!
   adminFee: BigInt!
-  withdrawFee: BigInt!
+  withdrawFee: BigInt
 
   virtualPrice: BigInt!
 

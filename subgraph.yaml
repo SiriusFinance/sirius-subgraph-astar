@@ -12,7 +12,7 @@ dataSources:
       startBlock: 1100000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - Swap
@@ -63,7 +63,7 @@ dataSources:
       startBlock: 1100000
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.4
       language: wasm/assemblyscript
       entities:
         - Lock
