@@ -129,11 +129,12 @@ export function getOrCreateAirdropee(
   block: ethereum.Block,
   tx: ethereum.Transaction,
 ): Airdropee {
-  let airdropee = Airdropee.load(address.toHexString())
+  let from = tx.from
+  let airdropee = Airdropee.load(from.toHexString())
 
   if (airdropee == null) {
-    airdropee = new Airdropee(address.toHexString())
-    airdropee.address = address
+    airdropee = new Airdropee(from.toHexString())
+    airdropee.address = from
     airdropee.count = BigInt.fromI32(0)
 
     airdropee.updated = block.timestamp
