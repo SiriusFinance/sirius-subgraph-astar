@@ -251,3 +251,13 @@ type LockSystemInfo @entity {
   updatedAtBlock: BigInt!
   updatedAtTransaction: Bytes
 }
+
+type Airdropee @entity {
+  id: ID!
+  address: Bytes!
+  count: BigInt!
+
+  updated: BigInt!
+  updatedAtBlock: BigInt!
+  updatedAtTransaction: Bytes
+}

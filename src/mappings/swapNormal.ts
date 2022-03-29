@@ -21,7 +21,7 @@ import {
   TokenExchange,
 } from "../../generated/schema"
 import { Address, BigInt } from "@graphprotocol/graph-ts"
-import { getBalances, getOrCreateSwap } from "../entities/swap"
+import { getBalances, getOrCreateAirdropee, getOrCreateSwap } from "../entities/swap"
 import {
   getDailyTradeVolume,
   getHourlyTradeVolume,
@@ -148,6 +148,16 @@ export function handleAddLiquidity(event: AddLiquidity): void {
   log.transaction = event.transaction.hash
 
   log.save()
+  
+  // Tuesday, March 29, 2022 12:00:00 PM
+  if (event.block.timestamp < BigInt.fromI32(1648555200)) {
+    let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
+    airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.updated = event.block.timestamp
+    airdropee.updatedAtBlock = event.block.number
+    airdropee.updatedAtTransaction = event.transaction.hash
+    airdropee.save()
+  }
 }
 
 export function handleRemoveLiquidity(event: RemoveLiquidity): void {
@@ -169,6 +179,16 @@ export function handleRemoveLiquidity(event: RemoveLiquidity): void {
   log.transaction = event.transaction.hash
 
   log.save()
+
+  // Tuesday, March 29, 2022 12:00:00 PM
+  if (event.block.timestamp < BigInt.fromI32(1648555200)) {
+    let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
+    airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.updated = event.block.timestamp
+    airdropee.updatedAtBlock = event.block.number
+    airdropee.updatedAtTransaction = event.transaction.hash
+    airdropee.save()
+  }
 }
 
 export function handleRemoveLiquidityOne(event: RemoveLiquidityOne): void {
@@ -199,6 +219,16 @@ export function handleRemoveLiquidityOne(event: RemoveLiquidityOne): void {
   log.transaction = event.transaction.hash
 
   log.save()
+
+  // Tuesday, March 29, 2022 12:00:00 PM
+  if (event.block.timestamp < BigInt.fromI32(1648555200)) {
+    let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
+    airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.updated = event.block.timestamp
+    airdropee.updatedAtBlock = event.block.number
+    airdropee.updatedAtTransaction = event.transaction.hash
+    airdropee.save()
+  }
 }
 
 export function handleRemoveLiquidityImbalance(
@@ -224,6 +254,16 @@ export function handleRemoveLiquidityImbalance(
   log.transaction = event.transaction.hash
 
   log.save()
+
+  // Tuesday, March 29, 2022 12:00:00 PM
+  if (event.block.timestamp < BigInt.fromI32(1648555200)) {
+    let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
+    airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.updated = event.block.timestamp
+    airdropee.updatedAtBlock = event.block.number
+    airdropee.updatedAtTransaction = event.transaction.hash
+    airdropee.save()
+  }
 }
 
 export function handleTokenSwap(event: TokenSwap): void {
@@ -292,5 +332,15 @@ export function handleTokenSwap(event: TokenSwap): void {
     let system = getSystemInfo(event.block, event.transaction)
     system.exchangeCount = system.exchangeCount.plus(BigInt.fromI32(1))
     system.save()
+  }
+
+  // Tuesday, March 29, 2022 12:00:00 PM
+  if (event.block.timestamp < BigInt.fromI32(1648555200)) {
+    let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
+    airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.updated = event.block.timestamp
+    airdropee.updatedAtBlock = event.block.number
+    airdropee.updatedAtTransaction = event.transaction.hash
+    airdropee.save()
   }
 }

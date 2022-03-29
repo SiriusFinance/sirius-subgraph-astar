@@ -1,6 +1,6 @@
 import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts"
 
-import { Swap } from "../../generated/schema"
+import { Airdropee, Swap } from "../../generated/schema"
 import { SwapNormal } from "../../generated/SiriusUSDPool/SwapNormal"
 import { getOrCreateToken } from "./token"
 import { getSystemInfo } from "./system"
@@ -122,4 +122,26 @@ function registerTokens(
   }
 
   return result
+}
+
+export function getOrCreateAirdropee(
+  address: Address,
+  block: ethereum.Block,
+  tx: ethereum.Transaction,
+): Airdropee {
+  let airdropee = Airdropee.load(address.toHexString())
+
+  if (airdropee == null) {
+    airdropee = new Airdropee(address.toHexString())
+    airdropee.address = address
+    airdropee.count = BigInt.fromI32(0)
+
+    airdropee.updated = block.timestamp
+    airdropee.updatedAtBlock = block.number
+    airdropee.updatedAtTransaction = tx.hash
+
+    airdropee.save()
+  }
+
+  return airdropee as Airdropee
 }
