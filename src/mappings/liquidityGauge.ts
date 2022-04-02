@@ -7,7 +7,11 @@ export function handleDeposit(event: Deposit): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
-    airdropee.transactions.push('farm_deposit')
+
+    let transactions = airdropee.transactions
+    transactions.push('farm_deposit')
+    airdropee.transactions = transactions
+
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
     airdropee.updatedAtTransaction = event.transaction.hash
@@ -20,7 +24,11 @@ export function handleWithdraw(event: Withdraw): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
-    airdropee.transactions.push('farm_withdraw')
+
+    let transactions = airdropee.transactions
+    transactions.push('farm_withdraw')
+    airdropee.transactions = transactions
+
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
     airdropee.updatedAtTransaction = event.transaction.hash
