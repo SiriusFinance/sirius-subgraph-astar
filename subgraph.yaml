@@ -75,3 +75,26 @@ dataSources:
         - event: Deposit(indexed address,uint256,indexed uint256,int128,uint256)
           handler: handleDeposit
       file: ./src/mappings/votingEscrow.ts
+
+  - kind: ethereum/contract
+    name: LiquidityGauge
+    network: mainnet
+    source:
+      address: "0x23E01EE46E8C01bf5C83A177fd5CBC5398BD70F6"
+      abi: LiquidityGauge
+      startBlock: 1100000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Airdropee
+      abis:
+        - name: LiquidityGauge
+          file: ./abis/LiquidityGauge.json
+      eventHandlers:
+        - event: Deposit(indexed address,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256)
+          handler: handleWithdraw
+      file: ./src/mappings/liquidityGauge.ts

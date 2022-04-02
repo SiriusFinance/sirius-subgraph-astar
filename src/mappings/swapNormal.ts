@@ -153,6 +153,7 @@ export function handleAddLiquidity(event: AddLiquidity): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.transactions.push('pool_add_liquidity')
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
     airdropee.updatedAtTransaction = event.transaction.hash
@@ -184,6 +185,7 @@ export function handleRemoveLiquidity(event: RemoveLiquidity): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.transactions.push('pool_remove_liquidity')
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
     airdropee.updatedAtTransaction = event.transaction.hash
@@ -224,6 +226,7 @@ export function handleRemoveLiquidityOne(event: RemoveLiquidityOne): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.transactions.push('pool_remove_liquidity_one')
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
     airdropee.updatedAtTransaction = event.transaction.hash
@@ -259,6 +262,7 @@ export function handleRemoveLiquidityImbalance(
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.transactions.push('pool_remove_liquidity_imbalance')
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
     airdropee.updatedAtTransaction = event.transaction.hash
@@ -338,6 +342,7 @@ export function handleTokenSwap(event: TokenSwap): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
+    airdropee.transactions.push('swap')
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
     airdropee.updatedAtTransaction = event.transaction.hash

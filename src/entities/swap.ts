@@ -136,6 +136,7 @@ export function getOrCreateAirdropee(
     airdropee = new Airdropee(from.toHexString())
     airdropee.address = from
     airdropee.count = BigInt.fromI32(0)
+    airdropee.transactions = []
 
     airdropee.updated = block.timestamp
     airdropee.updatedAtBlock = block.number

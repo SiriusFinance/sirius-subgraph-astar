@@ -256,6 +256,7 @@ type Airdropee @entity {
   id: ID!
   address: Bytes!
   count: BigInt!
+  transactions: [String!]!
 
   updated: BigInt!
   updatedAtBlock: BigInt!
