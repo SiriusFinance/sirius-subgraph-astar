@@ -256,7 +256,14 @@ type Airdropee @entity {
   id: ID!
   address: Bytes!
   count: BigInt!
-  transactions: [String!]!
+
+  swapCount: BigInt!
+  addLiquidityCount: BigInt!
+  removeLiquidityCount: BigInt!
+  removeLiquidityImbalanceCount: BigInt!
+  removeLiquidityOneCount: BigInt!
+  farmDepositCount: BigInt!
+  farmWithdrawCount: BigInt!
 
   updated: BigInt!
   updatedAtBlock: BigInt!

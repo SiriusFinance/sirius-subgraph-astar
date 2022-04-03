@@ -153,10 +153,7 @@ export function handleAddLiquidity(event: AddLiquidity): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
-
-    let transactions = airdropee.transactions
-    transactions.push('pool_add_liquidity')
-    airdropee.transactions = transactions
+    airdropee.addLiquidityCount = airdropee.addLiquidityCount.plus(BigInt.fromI32(1))
 
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
@@ -189,10 +186,7 @@ export function handleRemoveLiquidity(event: RemoveLiquidity): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
-
-    let transactions = airdropee.transactions
-    transactions.push('pool_remove_liquidity')
-    airdropee.transactions = transactions
+    airdropee.removeLiquidityCount = airdropee.removeLiquidityCount.plus(BigInt.fromI32(1))
 
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
@@ -234,10 +228,7 @@ export function handleRemoveLiquidityOne(event: RemoveLiquidityOne): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
-
-    let transactions = airdropee.transactions
-    transactions.push('pool_remove_liquidity_one')
-    airdropee.transactions = transactions
+    airdropee.removeLiquidityOneCount = airdropee.removeLiquidityOneCount.plus(BigInt.fromI32(1))
 
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
@@ -274,10 +265,7 @@ export function handleRemoveLiquidityImbalance(
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
-
-    let transactions = airdropee.transactions
-    transactions.push('pool_remove_liquidity_imbalance')
-    airdropee.transactions = transactions
+    airdropee.removeLiquidityImbalanceCount = airdropee.removeLiquidityImbalanceCount.plus(BigInt.fromI32(1))
 
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
@@ -358,10 +346,7 @@ export function handleTokenSwap(event: TokenSwap): void {
   if (event.block.timestamp < BigInt.fromI32(1648555200)) {
     let airdropee = getOrCreateAirdropee(event.address, event.block, event.transaction)
     airdropee.count = airdropee.count.plus(BigInt.fromI32(1))
-
-    let transactions = airdropee.transactions
-    transactions.push('swap')
-    airdropee.transactions = transactions
+    airdropee.swapCount = airdropee.swapCount.plus(BigInt.fromI32(1))
 
     airdropee.updated = event.block.timestamp
     airdropee.updatedAtBlock = event.block.number
