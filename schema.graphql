@@ -264,6 +264,7 @@ type Airdropee @entity {
   removeLiquidityOneCount: BigInt!
   farmDepositCount: BigInt!
   farmWithdrawCount: BigInt!
+  farmClaimCount: BigInt!
 
   updated: BigInt!
   updatedAtBlock: BigInt!

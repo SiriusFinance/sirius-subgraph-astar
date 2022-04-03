@@ -143,6 +143,7 @@ export function getOrCreateAirdropee(
     airdropee.removeLiquidityOneCount = BigInt.fromI32(0)
     airdropee.farmDepositCount = BigInt.fromI32(0)
     airdropee.farmWithdrawCount = BigInt.fromI32(0)
+    airdropee.farmClaimCount = BigInt.fromI32(0)
     airdropee.updated = block.timestamp
     airdropee.updatedAtBlock = block.number
     airdropee.updatedAtTransaction = tx.hash
