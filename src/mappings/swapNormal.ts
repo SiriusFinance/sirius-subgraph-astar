@@ -348,7 +348,7 @@ export function handleTokenSwap(event: TokenSwap): void {
         } else {
           return BigDecimal.fromString("0")
         }
-      }).reduce((first, second) => first.plus(second), BigDecimal.fromString("0"))
+      }).reduce((first: BigDecimal, second: BigDecimal) => first.plus(second), BigDecimal.fromString("0"))
       let apy = dailyTotalSwapFees.div(tvl).times(BigDecimal.fromString('365'))
       swap.TVL = tvl
       swap.APY = apy
