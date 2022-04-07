@@ -276,7 +276,8 @@ export function handleRemoveLiquidityImbalance(
 
 export function handleTokenSwap(event: TokenSwap): void {
   let swap = getOrCreateSwap(event.address, event.block, event.transaction)
-  swap.balances = getBalances(event.address, swap.numTokens)
+  let balances = getBalances(event.address, swap.numTokens)
+  swap.balances = balances
   swap.save()
 
   if (swap != null) {
@@ -357,8 +358,8 @@ export function handleTokenSwap(event: TokenSwap): void {
           event.transaction,
         )
         if (token !== null) {
-          let balance = swap.balances[i]
-          let balanceDecimal = balance.divDecimal(BigInt.fromString("10").pow(token.decimals).toBigDecimal())
+          let balance: BigInt = balances[i]
+          let balanceDecimal: BigDecimal = balance.divDecimal(BigInt.fromString("10").pow(token.decimals).toBigDecimal())
           tvl = tvl.plus(balanceDecimal)
         } 
       }
