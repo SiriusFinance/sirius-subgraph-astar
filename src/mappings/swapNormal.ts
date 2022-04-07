@@ -359,7 +359,10 @@ export function handleTokenSwap(event: TokenSwap): void {
         )
         if (token !== null) {
           let balance: BigInt = balances[i]
-          let balanceDecimal: BigDecimal = balance.divDecimal(BigInt.fromString("10").pow(token.decimals).toBigDecimal())
+          let balanceDecimal: BigDecimal = decimal.fromBigInt(
+            balance,
+            token.decimals.toI32(),
+          )
           tvl = tvl.plus(balanceDecimal)
         } 
       }
