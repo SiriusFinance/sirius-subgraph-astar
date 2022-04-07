@@ -337,19 +337,31 @@ export function handleTokenSwap(event: TokenSwap): void {
 
       // calculate TVL and APY
       let dailyTotalSwapFees = dailyVolume.volume.times(swap.swapFee.toBigDecimal()).div(BigDecimal.fromString("10000000000"))
-      let balanceArray: Array<BigDecimal> = swap.balances.map((balance: BigInt , i) => {
+      // let balanceArray: Array<BigDecimal> = swap.balances.map((balance: BigInt , i) => {
+      //   let token = getOrCreateToken(
+      //     Address.fromString(tokens[i]),
+      //     event.block,
+      //     event.transaction,
+      //   )
+      //   if (token !== null) {
+      //     return balance.divDecimal(BigInt.fromString("10").pow(token.decimals).toBigDecimal())
+      //   } else {
+      //     return BigDecimal.fromString("0")
+      //   }
+      // })
+      let tvl: BigDecimal = BigDecimal.fromString("0")
+      for (let i = 0; i < swap.tokens.length; i++) {
         let token = getOrCreateToken(
           Address.fromString(tokens[i]),
           event.block,
           event.transaction,
         )
         if (token !== null) {
-          return balance.divDecimal(BigInt.fromString("10").pow(token.decimals).toBigDecimal())
-        } else {
-          return BigDecimal.fromString("0")
-        }
-      })
-      let tvl: BigDecimal = balanceArray.reduce((first: BigDecimal, second: BigDecimal) => first.plus(second), BigDecimal.fromString("0"))
+          let balance = swap.balances[i]
+          let balanceDecimal = balance.divDecimal(BigInt.fromString("10").pow(token.decimals).toBigDecimal())
+          tvl = tvl.plus(balanceDecimal)
+        } 
+      }
       let apy = dailyTotalSwapFees.div(tvl).times(BigDecimal.fromString('365'))
       swap.TVL = tvl
       swap.APY = apy
