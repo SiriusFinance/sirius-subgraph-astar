@@ -1,4 +1,4 @@
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts"
+import { Address, BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts"
 
 import { Airdropee, Swap } from "../../generated/schema"
 import { SwapNormal } from "../../generated/SiriusUSDPool/SwapNormal"
@@ -43,6 +43,9 @@ export function getOrCreateSwap(
     swap.virtualPrice = info.virtualPrice
 
     swap.owner = info.owner
+
+    swap.TVL = BigDecimal.fromString("0")
+    swap.APY = BigDecimal.fromString("0")
 
     swap.save()
 

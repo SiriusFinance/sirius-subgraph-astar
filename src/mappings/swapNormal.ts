@@ -20,7 +20,7 @@ import {
   StopRampAEvent,
   TokenExchange,
 } from "../../generated/schema"
-import { Address, BigInt } from "@graphprotocol/graph-ts"
+import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts"
 import { getBalances, getOrCreateAirdropee, getOrCreateSwap } from "../entities/swap"
 import {
   getDailyTradeVolume,
@@ -334,6 +334,25 @@ export function handleTokenSwap(event: TokenSwap): void {
       let weeklyVolume = getWeeklyTradeVolume(swap, event.block.timestamp)
       weeklyVolume.volume = weeklyVolume.volume.plus(volume)
       weeklyVolume.save()
+
+      // calculate TVL and APY
+      let dailyTotalSwapFees = dailyVolume.volume.times(swap.swapFee.toBigDecimal()).div(BigDecimal.fromString("10000000000"))
+      let tvl = swap.balances.map((balance, i) => {
+        let token = getOrCreateToken(
+          Address.fromString(tokens[i]),
+          event.block,
+          event.transaction,
+        )
+        if (token !== null) {
+          return balance.div(BigInt.fromI32(10).pow(token.decimals))
+        } else {
+          return BigInt.fromI32(0)
+        }
+      }).reduce(($0, $1) => $0.plus($1), BigInt.fromI32(0))
+      let apy = dailyTotalSwapFees.div(tvl.toBigDecimal()).times(BigDecimal.fromString('365'))
+      swap.TVL = tvl.toBigDecimal()
+      swap.APY = apy
+      swap.save()
     }
 
     // update system

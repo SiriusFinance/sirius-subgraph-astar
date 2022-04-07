@@ -52,6 +52,9 @@ type Swap @entity {
 
   # cumulative weekly trade volume
   weeklyVolumes: [WeeklyVolume!] @derivedFrom(field: "swap")
+
+  TVL: BigDecimal!
+  APY: BigDecimal!
 }
 
 interface TradeVolume @entity {
