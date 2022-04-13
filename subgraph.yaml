@@ -109,9 +109,9 @@ dataSources:
     name: SiriusUSDSMetaPool
     network: mainnet
     source:
-      address: "0xC9D3Bca069A95CF06fe6DE49a47E3737C9413D45"
+      address: "0x8A900E0A443a504F6Da123B4a5297F1A074fCd81"
       abi: MetaSwap
-      startBlock: 1100000
+      startBlock: 1230000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -164,7 +164,7 @@ dataSources:
     source:
       address: "0xC55F57E3bcaD88A537Aa0855Ca13D0Dc3bDb6307"
       abi: MetaSwap
-      startBlock: 1100000
+      startBlock: 1230000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
