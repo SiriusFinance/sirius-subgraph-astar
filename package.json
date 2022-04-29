@@ -7,9 +7,9 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sirius-finance/sirius",
-    "create-local": "graph create --node http://localhost:8021/ sirius-finance/sirius",
-    "remove-local": "graph remove --node http://localhost:8021/ sirius-finance/sirius",
-    "deploy-local": "graph deploy --node http://localhost:8021/ --ipfs http://localhost:5002 sirius-finance/sirius"
+    "create-local": "graph create --node http://localhost:8022/ sirius-finance/sirius",
+    "remove-local": "graph remove --node http://localhost:8022/ sirius-finance/sirius",
+    "deploy-local": "graph deploy --node http://localhost:8022/ --ipfs http://localhost:5003 sirius-finance/sirius"
   },
   "repository": {
     "type": "git",

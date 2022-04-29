@@ -4,63 +4,12 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: SiriusUSDPool
-    network: mainnet
-    source:
-      address: "0xb26Ca3a7858dBfeCe00D42d8d8ddA3307707e3b1"
-      abi: SwapNormal
-      startBlock: 1100000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Swap
-        - SystemInfo
-        - Token
-        - NewAdminFeeEvent
-        - NewSwapFeeEvent
-        - NewWithdrawFeeEvent
-        - RampAEvent
-        - StopRampAEvent
-        - AddLiquidityEvent
-        - RemoveLiquidityEvent
-        - TokenExchange
-      abis:
-        - name: SwapNormal
-          file: ./abis/SwapNormal.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-      eventHandlers:
-        - event: NewAdminFee(uint256)
-          handler: handleNewAdminFee
-        - event: NewSwapFee(uint256)
-          handler: handleNewSwapFee
-        - event: NewWithdrawFee(uint256)
-          handler: handleNewWithdrawFee
-        - event: RampA(uint256,uint256,uint256,uint256)
-          handler: handleRampA
-        - event: StopRampA(uint256,uint256)
-          handler: handleStopRampA
-        - event: AddLiquidity(indexed address,uint256[],uint256[],uint256,uint256)
-          handler: handleAddLiquidity
-        - event: RemoveLiquidity(indexed address,uint256[],uint256)
-          handler: handleRemoveLiquidity
-        - event: RemoveLiquidityImbalance(indexed address,uint256[],uint256[],uint256,uint256)
-          handler: handleRemoveLiquidityImbalance
-        - event: RemoveLiquidityOne(indexed address,uint256,uint256,uint256,uint256)
-          handler: handleRemoveLiquidityOne
-        - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
-          handler: handleTokenSwap
-      file: ./src/mappings/swapNormal.ts
-
-  - kind: ethereum/contract
     name: Sirius4Pool
     network: mainnet
     source:
-      address: "0x9Ea9ac41A61f27cDF51AbCF86bf0D4D967f5A344"
+      address: "0x417E9d065ee22DFB7CC6C63C403600E27627F333"
       abi: SwapNormal
-      startBlock: 1100000
+      startBlock: 815000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -159,12 +108,12 @@ dataSources:
       file: ./src/mappings/metaSwap.ts
 
   - kind: ethereum/contract
-    name: USDs-Sirius4Pool
+    name: oUSDmetapool
     network: mainnet
     source:
-      address: "0xC55F57E3bcaD88A537Aa0855Ca13D0Dc3bDb6307"
+      address: "0xD18AbE9bcedeb5A9a65439e604b0BE8db0bdB176"
       abi: MetaSwap
-      startBlock: 1230000
+      startBlock: 910000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -212,12 +161,65 @@ dataSources:
       file: ./src/mappings/metaSwap.ts
   
   - kind: ethereum/contract
+    name: BAImetapool
+    network: mainnet
+    source:
+      address: "0x290c7577D209c2d8DB06F377af31318cE31938fB"
+      abi: MetaSwap
+      startBlock: 914000
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Swap
+        - SystemInfo
+        - Token
+        - NewAdminFeeEvent
+        - NewSwapFeeEvent
+        - RampAEvent
+        - StopRampAEvent
+        - AddLiquidityEvent
+        - RemoveLiquidityEvent
+        - TokenExchange
+        - TokenExchangeUnderlying
+      abis:
+        - name: MetaSwap
+          file: ./abis/MetaSwap.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: NewAdminFee(uint256)
+          handler: handleNewAdminFee
+        - event: NewSwapFee(uint256)
+          handler: handleNewSwapFee
+        - event: RampA(uint256,uint256,uint256,uint256)
+          handler: handleRampA
+        - event: StopRampA(uint256,uint256)
+          handler: handleStopRampA
+        - event: AddLiquidity(indexed address,uint256[],uint256[],uint256,uint256)
+          handler: handleAddLiquidity
+        - event: RemoveLiquidity(indexed address,uint256[],uint256)
+          handler: handleRemoveLiquidity
+        - event: RemoveLiquidityImbalance(indexed address,uint256[],uint256[],uint256,uint256)
+          handler: handleRemoveLiquidityImbalance
+        - event: RemoveLiquidityOne(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleRemoveLiquidityOne
+        - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
+          handler: handleTokenSwap
+        - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
+          handler: handleTokenSwap
+        - event: TokenSwapUnderlying(indexed address,uint256,uint256,uint128,uint128)
+          handler: handleTokenSwapUnderlying
+      file: ./src/mappings/metaSwap.ts
+
+  - kind: ethereum/contract
     name: VotingEscrow
     network: mainnet
     source:
-      address: "0x30F038635c085C5BcD80F50157FC48aEF46f5Fef"
+      address: "0xc9D383f1e6E5270D77ad8e198729e237b60b6397"
       abi: VotingEscrow
-      startBlock: 1100000
+      startBlock: 815000
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -232,47 +234,3 @@ dataSources:
         - event: Deposit(indexed address,uint256,indexed uint256,int128,uint256)
           handler: handleDeposit
       file: ./src/mappings/votingEscrow.ts
-
-  - kind: ethereum/contract
-    name: LiquidityGauge
-    network: mainnet
-    source:
-      address: "0x23E01EE46E8C01bf5C83A177fd5CBC5398BD70F6"
-      abi: LiquidityGauge
-      startBlock: 1100000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Airdropee
-      abis:
-        - name: LiquidityGauge
-          file: ./abis/LiquidityGauge.json
-      eventHandlers:
-        - event: Deposit(indexed address,uint256)
-          handler: handleDeposit
-        - event: Withdraw(indexed address,uint256)
-          handler: handleWithdraw
-      file: ./src/mappings/liquidityGauge.ts
-
-  - kind: ethereum/contract
-    name: Minter
-    network: mainnet
-    source:
-      address: "0x7323562562ea1b8b256Fd9F12d70cA187db8ed99"
-      abi: Minter
-      startBlock: 1100000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Airdropee
-      abis:
-        - name: Minter
-          file: ./abis/Minter.json
-      eventHandlers:
-        - event: Minted(indexed address,address,uint256)
-          handler: handleMinted
-      file: ./src/mappings/minter.ts
