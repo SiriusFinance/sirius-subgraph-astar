@@ -358,9 +358,8 @@ export function handleTokenSwap(event: TokenSwap): void {
     // save trade volume
     let tokens = swap.tokens
     if (
-      // event.params.soldId.toI32() < tokens.length &&
-      // event.params.boughtId.toI32() < tokens.length
-      true
+      event.params.soldId.toI32() < tokens.length &&
+      event.params.boughtId.toI32() < tokens.length
     ) {
       let soldToken = getOrCreateToken(
         Address.fromString(tokens[event.params.soldId.toI32()]),
@@ -458,9 +457,8 @@ export function handleTokenSwapUnderlying(event: TokenSwapUnderlying): void {
     // save trade volume
     let tokens = swap.tokens
     if (
-      // event.params.soldId.toI32() < tokens.length &&
-      // event.params.boughtId.toI32() < tokens.length
-      true
+      event.params.soldId.toI32() < tokens.length &&
+      event.params.boughtId.toI32() < tokens.length
     ) {
       let soldToken = getOrCreateToken(
         Address.fromString(tokens[event.params.soldId.toI32()]),
