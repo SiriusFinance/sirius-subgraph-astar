@@ -180,7 +180,7 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
     i++
   } while (!t.reverted && !b.reverted)
 
-  let baseTokens = swapContract.metaSwapStorage().baseTokens
+  let baseTokens = swapContract.metaSwapStorage().baseTokens()
   for (let i = 0; i < tokens.length - 1; i++) {
     allTokens.push(tokens[i])
   }
