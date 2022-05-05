@@ -10,6 +10,7 @@ const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 class SwapInfo {
   tokens: Address[]
+  allTokens: Address[] // tokens + basePool Tokens (metaSwap)
   balances: BigInt[]
   A: BigInt
   swapFee: BigInt
@@ -87,6 +88,7 @@ export function getSwapInfo(swap: Address): SwapInfo {
 
   return {
     tokens,
+    allTokens: tokens,
     balances,
     A: swapContract.getA(),
     swapFee: swapContract.swapStorage().value4,
@@ -154,6 +156,7 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
 
   let tokens: Address[] = []
   let balances: BigInt[] = []
+  let allTokens: Address[] = []
 
   let t: ethereum.CallResult<Address>
   let b: ethereum.CallResult<BigInt>
@@ -175,8 +178,20 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
     i++
   } while (!t.reverted && !b.reverted)
 
+  let baseTokens = swapContract.MetaSwap.baseTokens
+  for (let i = 0; i < tokens.length - 1; i++) {
+    allTokens.push(tokens[i])
+  }
+  for (let i = 0; i < baseTokens.length; i++) {
+    allTokens.push(baseTokens[i])
+  }
+
+
+
+
   return {
     tokens,
+    allTokens,
     balances,
     A: swapContract.getA(),
     swapFee: swapContract.swapStorage().value4,
