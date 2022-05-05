@@ -157,9 +157,11 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
   let swapContract = MetaSwap.bind(swap)
 
   let tokens: Address[] = []
+  let baseTokens: Address[] = []
   let balances: BigInt[] = []
   let allTokens: Address[] = []
 
+  // get metapool tokens
   let t: ethereum.CallResult<Address>
   let b: ethereum.CallResult<BigInt>
 
@@ -180,7 +182,25 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
     i++
   } while (!t.reverted && !b.reverted)
 
-  let baseTokens = swapContract.metaSwapStorage().baseTokens()
+  // get the lp token bounded basepool tokens
+  let baseSwapAddress = swapContract.metaSwapStorage().value0
+  let baseSwapContract = Swap.bind(baseSwapAddress)
+
+  let t2: ethereum.CallResult<Address>
+
+  let j = 0
+
+  do {
+    t2 = baseSwapContract.try_getToken(j)
+
+    if (!t2.reverted && t2.value.toHexString() != ZERO_ADDRESS) {
+      baseTokens.push(t2.value)
+    }
+
+    j++
+  } while (!t2.reverted)
+
+  // combine metapool tokens and basepool tokens to get all tokens
   for (let i = 0; i < tokens.length - 1; i++) {
     allTokens.push(tokens[i])
   }
