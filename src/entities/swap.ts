@@ -184,7 +184,7 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
 
   // get the lp token bounded basepool tokens
   let baseSwapAddress = swapContract.metaSwapStorage().value0
-  let baseSwapContract = Swap.bind(baseSwapAddress)
+  let baseSwapContract = SwapNormal.bind(baseSwapAddress)
 
   let t2: ethereum.CallResult<Address>
 
