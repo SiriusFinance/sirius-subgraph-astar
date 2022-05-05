@@ -34,6 +34,7 @@ export function getOrCreateSwap(
     swap.address = address
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
+    swap.allTokens = registerTokens(info.allTokens, block, tx)
     swap.balances = info.balances
     swap.lpToken = info.lpToken
 
@@ -124,6 +125,7 @@ export function getOrCreateMetaSwap(
     swap.address = address
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
+    swap.allTokens = registerTokens(info.allTokens, block, tx)
     swap.balances = info.balances
     swap.lpToken = info.lpToken
 
@@ -185,9 +187,6 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
   for (let i = 0; i < baseTokens.length; i++) {
     allTokens.push(baseTokens[i])
   }
-
-
-
 
   return {
     tokens,

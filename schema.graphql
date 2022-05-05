@@ -22,6 +22,9 @@ type Swap @entity {
   # supported tokens
   tokens: [Token!]!
 
+  # supported all tokens (metapool tokens plus basepool tokens)
+  allTokens: [Token!]!
+
   # token balances
   balances: [BigInt!]!
 
