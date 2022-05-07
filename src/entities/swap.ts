@@ -1,7 +1,7 @@
 import { Address, BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts"
 
 import { Airdropee, Swap } from "../../generated/schema"
-import { SwapNormal } from "../../generated/SiriusUSDPool/SwapNormal"
+import { SwapNormal } from "../../generated/Sirius4Pool/SwapNormal"
 import { getOrCreateToken } from "./token"
 import { getSystemInfo } from "./system"
 import { MetaSwap } from "../../generated/SiriusUSDSMetaPool/MetaSwap"
