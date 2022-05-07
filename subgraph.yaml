@@ -80,6 +80,8 @@ dataSources:
       abis:
         - name: MetaSwap
           file: ./abis/MetaSwap.json
+        - name: SwapNormal
+          file: ./abis/SwapNormal.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
@@ -131,6 +133,8 @@ dataSources:
       abis:
         - name: MetaSwap
           file: ./abis/MetaSwap.json
+        - name: SwapNormal
+          file: ./abis/SwapNormal.json
         - name: ERC20
           file: ./abis/ERC20.json
       eventHandlers:
