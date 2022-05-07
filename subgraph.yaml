@@ -101,8 +101,6 @@ dataSources:
           handler: handleRemoveLiquidityOne
         - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
           handler: handleTokenSwap
-        - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
-          handler: handleTokenSwap
         - event: TokenSwapUnderlying(indexed address,uint256,uint256,uint128,uint128)
           handler: handleTokenSwapUnderlying
       file: ./src/mappings/metaSwap.ts
@@ -154,8 +152,6 @@ dataSources:
           handler: handleRemoveLiquidityOne
         - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
           handler: handleTokenSwap
-        - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
-          handler: handleTokenSwap
         - event: TokenSwapUnderlying(indexed address,uint256,uint256,uint128,uint128)
           handler: handleTokenSwapUnderlying
       file: ./src/mappings/metaSwap.ts
@@ -205,8 +201,6 @@ dataSources:
           handler: handleRemoveLiquidityImbalance
         - event: RemoveLiquidityOne(indexed address,uint256,uint256,uint256,uint256)
           handler: handleRemoveLiquidityOne
-        - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
-          handler: handleTokenSwap
         - event: TokenSwap(indexed address,uint256,uint256,uint128,uint128)
           handler: handleTokenSwap
         - event: TokenSwapUnderlying(indexed address,uint256,uint256,uint128,uint128)
