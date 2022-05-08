@@ -6,6 +6,8 @@ import { getOrCreateToken } from "./token"
 import { getSystemInfo } from "./system"
 import { MetaSwap } from "../../generated/SiriusUSDSMetaPool/MetaSwap"
 
+import { log } from '@graphprotocol/graph-ts'
+
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 class SwapInfo {
@@ -202,6 +204,7 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
     t2 = baseSwapContract.try_getToken(j)
 
     if (!t2.reverted && t2.value.toHexString() != ZERO_ADDRESS) {
+      log.debug('{}: {}', [j.toString(), t2.value.toString()])
       baseTokens.push(t2.value)
     }
 
