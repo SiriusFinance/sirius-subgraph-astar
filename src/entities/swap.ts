@@ -39,8 +39,8 @@ export function getOrCreateSwap(
     swap.baseSwapAddress = info.baseSwapAddress
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
-    swap.baseTokens = registerTokens(info.baseTokens, block, tx)
-    swap.allTokens = registerTokens(info.allTokens, block, tx)
+    swap.baseTokens = registerBaseTokens(info.baseTokens, block, tx)
+    swap.allTokens = registerAllTokens(info.allTokens, block, tx)
     swap.balances = info.balances
     swap.lpToken = info.lpToken
 
@@ -134,8 +134,8 @@ export function getOrCreateMetaSwap(
     swap.baseSwapAddress = info.baseSwapAddress
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
-    swap.baseTokens = registerTokens(info.baseTokens, block, tx)
-    swap.allTokens = registerTokens(info.allTokens, block, tx)
+    swap.baseTokens = registerBaseTokens(info.baseTokens, block, tx)
+    swap.allTokens = registerAllTokens(info.allTokens, block, tx)
     swap.balances = info.balances
     swap.lpToken = info.lpToken
 
@@ -215,9 +215,9 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
   allTokens = tokens.slice()
   allTokens.pop()
 
-  // for (let i = 0; i < baseTokens.length; i++) {
-  //   allTokens.push(baseTokens[i])
-  // }
+  for (let i = 0; i < baseTokens.length; i++) {
+    allTokens.push(baseTokens[i])
+  }
 
   return {
     baseSwapAddress,
@@ -246,6 +246,46 @@ export function getBalancesMetaSwap(swap: Address, N_COINS: number): BigInt[] {
 }
 
 function registerTokens(
+  list: Address[],
+  block: ethereum.Block,
+  tx: ethereum.Transaction,
+): string[] {
+  let result: string[] = []
+
+  for (let i = 0; i < list.length; ++i) {
+    let current = list[i]
+
+    if (current.toHexString() != ZERO_ADDRESS) {
+      let token = getOrCreateToken(current, block, tx)
+
+      result.push(token.id)
+    }
+  }
+
+  return result
+}
+
+function registerBaseTokens(
+  list: Address[],
+  block: ethereum.Block,
+  tx: ethereum.Transaction,
+): string[] {
+  let result: string[] = []
+
+  for (let i = 0; i < list.length; ++i) {
+    let current = list[i]
+
+    if (current.toHexString() != ZERO_ADDRESS) {
+      let token = getOrCreateToken(current, block, tx)
+
+      result.push(token.id)
+    }
+  }
+
+  return result
+}
+
+function registerAllTokens(
   list: Address[],
   block: ethereum.Block,
   tx: ethereum.Transaction,
