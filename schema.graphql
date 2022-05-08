@@ -16,6 +16,9 @@ type Swap @entity {
   # swap address
   address: Bytes!
 
+  # base swap address
+  baseSwapAddress: Bytes!
+
   # number of tokens supported
   numTokens: Int!
 

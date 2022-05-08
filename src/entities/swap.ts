@@ -9,6 +9,7 @@ import { MetaSwap } from "../../generated/SiriusUSDSMetaPool/MetaSwap"
 const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 class SwapInfo {
+  baseSwapAddress: Address
   tokens: Address[]
   baseTokens: Address[]
   allTokens: Address[] // tokens + basePool Tokens (metaSwap)
@@ -33,6 +34,7 @@ export function getOrCreateSwap(
 
     swap = new Swap(address.toHexString())
     swap.address = address
+    swap.baseSwapAddress = info.baseSwapAddress
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
     swap.baseTokens = registerTokens(info.baseTokens, block, tx)
@@ -90,6 +92,7 @@ export function getSwapInfo(swap: Address): SwapInfo {
   } while (!t.reverted && !b.reverted)
 
   return {
+    baseSwapAddress: swap,
     tokens,
     baseTokens: tokens,
     allTokens: tokens,
@@ -126,6 +129,7 @@ export function getOrCreateMetaSwap(
 
     swap = new Swap(address.toHexString())
     swap.address = address
+    swap.baseSwapAddress = info.baseSwapAddress
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
     swap.baseTokens = registerTokens(info.baseTokens, block, tx)
@@ -213,6 +217,7 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
   }
 
   return {
+    baseSwapAddress,
     tokens,
     baseTokens,
     allTokens,
