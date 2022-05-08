@@ -201,9 +201,9 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
   } while (!t2.reverted)
 
   // combine metapool tokens and basepool tokens to get all tokens
-  for (let i = 0; i < tokens.length - 1; i++) {
-    allTokens.push(tokens[i])
-  }
+  allTokens = tokens.slice()
+  allTokens.pop()
+   
   for (let i = 0; i < baseTokens.length; i++) {
     allTokens.push(baseTokens[i])
   }
