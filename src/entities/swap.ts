@@ -215,9 +215,9 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
   allTokens = tokens.slice()
   allTokens.pop()
 
-  for (let i = 0; i < baseTokens.length; i++) {
-    allTokens.push(baseTokens[i])
-  }
+  // for (let i = 0; i < baseTokens.length; i++) {
+  //   allTokens.push(baseTokens[i])
+  // }
 
   return {
     baseSwapAddress,
