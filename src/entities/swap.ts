@@ -10,6 +10,7 @@ const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000"
 
 class SwapInfo {
   tokens: Address[]
+  baseTokens: Address[]
   allTokens: Address[] // tokens + basePool Tokens (metaSwap)
   balances: BigInt[]
   A: BigInt
@@ -34,6 +35,7 @@ export function getOrCreateSwap(
     swap.address = address
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
+    swap.baseTokens = registerTokens(info.baseTokens, block, tx)
     swap.allTokens = registerTokens(info.allTokens, block, tx)
     swap.balances = info.balances
     swap.lpToken = info.lpToken
@@ -89,6 +91,7 @@ export function getSwapInfo(swap: Address): SwapInfo {
 
   return {
     tokens,
+    baseTokens: tokens,
     allTokens: tokens,
     balances,
     A: swapContract.getA(),
@@ -125,6 +128,7 @@ export function getOrCreateMetaSwap(
     swap.address = address
     swap.numTokens = info.tokens.length
     swap.tokens = registerTokens(info.tokens, block, tx)
+    swap.baseTokens = registerTokens(info.baseTokens, block, tx)
     swap.allTokens = registerTokens(info.allTokens, block, tx)
     swap.balances = info.balances
     swap.lpToken = info.lpToken
@@ -203,13 +207,14 @@ export function getMetaSwapInfo(swap: Address): SwapInfo {
   // combine metapool tokens and basepool tokens to get all tokens
   allTokens = tokens.slice()
   allTokens.pop()
-   
+
   for (let i = 0; i < baseTokens.length; i++) {
     allTokens.push(baseTokens[i])
   }
 
   return {
     tokens,
+    baseTokens,
     allTokens,
     balances,
     A: swapContract.getA(),

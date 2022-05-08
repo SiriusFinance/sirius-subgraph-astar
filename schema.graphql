@@ -22,6 +22,9 @@ type Swap @entity {
   # supported tokens
   tokens: [Token!]!
 
+  # supported base tokens (for SwapNormal, this is same as tokens; for MetaSwap, this is the corresbonding base pool tokens)
+  baseTokens: [Token!]!
+
   # supported all tokens (metapool tokens plus basepool tokens)
   allTokens: [Token!]!
 
