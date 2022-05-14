@@ -53,6 +53,9 @@ type Swap @entity {
 
   exchanges: [Exchange!] @derivedFrom(field: "swap")
 
+  # cumulative daily tvl
+  dailyTvls: [DailyTvl!] @derivedFrom(field: "swap")
+
   # cumulative hourly trade volume
   hourlyVolumes: [HourlyVolume!] @derivedFrom(field: "swap")
 
@@ -64,6 +67,19 @@ type Swap @entity {
 
   TVL: BigDecimal!
   APY: BigDecimal!
+}
+
+interface PoolTVL @entity {
+  swap: Swap!
+  timestamp: BigInt!
+  tvl: BigDecimal!
+}
+
+type DailyTvl implements PoolTVL @entity {
+  id: ID!
+  swap: Swap!
+  timestamp: BigInt!
+  tvl: BigDecimal!
 }
 
 interface TradeVolume @entity {

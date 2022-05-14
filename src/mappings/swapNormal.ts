@@ -27,6 +27,9 @@ import {
   getHourlyTradeVolume,
   getWeeklyTradeVolume,
 } from "../entities/volume"
+import {
+  getDailyPoolTvl
+} from "../entities/tvl"
 
 import { decimal } from "@protofire/subgraph-toolkit"
 import { getOrCreateToken } from "../entities/token"
@@ -152,6 +155,10 @@ export function handleAddLiquidity(event: AddLiquidity): void {
   }
   swap.TVL = tvl
 
+  let dailyTvl = getDailyPoolTvl(swap, event.block.timestamp)
+  dailyTvl.tvl = tvl
+  dailyTvl.save()
+
   // update APY
   let dailyVolume = getDailyTradeVolume(swap, event.block.timestamp)
   let dailyTotalSwapFees = dailyVolume.volume.times(swap.swapFee.toBigDecimal()).div(BigDecimal.fromString("10000000000"))
@@ -218,6 +225,10 @@ export function handleRemoveLiquidity(event: RemoveLiquidity): void {
   }
   swap.TVL = tvl
 
+  let dailyTvl = getDailyPoolTvl(swap, event.block.timestamp)
+  dailyTvl.tvl = tvl
+  dailyTvl.save()
+
   // update APY
   let dailyVolume = getDailyTradeVolume(swap, event.block.timestamp)
   let dailyTotalSwapFees = dailyVolume.volume.times(swap.swapFee.toBigDecimal()).div(BigDecimal.fromString("10000000000"))
@@ -281,6 +292,10 @@ export function handleRemoveLiquidityOne(event: RemoveLiquidityOne): void {
     } 
   }
   swap.TVL = tvl
+
+  let dailyTvl = getDailyPoolTvl(swap, event.block.timestamp)
+  dailyTvl.tvl = tvl
+  dailyTvl.save()
 
   // update APY
   let dailyVolume = getDailyTradeVolume(swap, event.block.timestamp)
@@ -356,6 +371,10 @@ export function handleRemoveLiquidityImbalance(
     } 
   }
   swap.TVL = tvl
+
+  let dailyTvl = getDailyPoolTvl(swap, event.block.timestamp)
+  dailyTvl.tvl = tvl
+  dailyTvl.save()
 
   // update APY
   let dailyVolume = getDailyTradeVolume(swap, event.block.timestamp)
@@ -478,6 +497,10 @@ export function handleTokenSwap(event: TokenSwap): void {
         } 
       }
       swap.TVL = tvl
+
+      let dailyTvl = getDailyPoolTvl(swap, event.block.timestamp)
+      dailyTvl.tvl = tvl
+      dailyTvl.save()
 
       // update APY
       let dailyTotalSwapFees = dailyVolume.volume.times(swap.swapFee.toBigDecimal()).div(BigDecimal.fromString("10000000000"))
