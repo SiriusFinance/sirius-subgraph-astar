@@ -4,7 +4,9 @@ import { Airdropee, Swap } from "../../generated/schema"
 import { SwapNormal } from "../../generated/Sirius4Pool/SwapNormal"
 import { getOrCreateToken } from "./token"
 import { getSystemInfo } from "./system"
-import { MetaSwap } from "../../generated/SiriusUSDSMetaPool/MetaSwap"
+import { MetaSwap } from "../../generated/BAImetapool/MetaSwap"
+import { XSwapDeposit } from "../../generated/JPYCmetapoolDeposit/XSwapDeposit"
+import { ERC20 } from "../../generated/JPYCmetapoolDeposit/ERC20"
 
 import { log } from '@graphprotocol/graph-ts'
 
@@ -240,6 +242,131 @@ export function getBalancesMetaSwap(swap: Address, N_COINS: number): BigInt[] {
 
   for (let i = 0; i < N_COINS; ++i) {
     balances[i] = swapContract.getTokenBalance(i)
+  }
+
+  return balances
+}
+
+export function getOrCreateXSwap(
+  address: Address,
+  block: ethereum.Block,
+  tx: ethereum.Transaction,
+): Swap {
+  let swap = Swap.load(address.toHexString())
+
+  if (swap == null) {
+    let info = getXSwapInfo(address)
+
+    swap = new Swap(address.toHexString())
+    swap.address = address
+    swap.baseSwapAddress = info.baseSwapAddress
+    swap.numTokens = info.tokens.length
+    swap.tokens = registerTokens(info.tokens, block, tx)
+    swap.baseTokens = registerBaseTokens(info.baseTokens, block, tx)
+    swap.allTokens = registerAllTokens(info.allTokens, block, tx)
+    swap.balances = info.balances
+    swap.lpToken = info.lpToken
+
+    swap.A = info.A
+
+    swap.swapFee = info.swapFee
+    swap.adminFee = info.adminFee
+
+
+    swap.virtualPrice = info.virtualPrice
+
+    swap.owner = info.owner
+
+    swap.TVL = BigDecimal.fromString("0")
+    swap.APY = BigDecimal.fromString("0")
+
+    swap.save()
+
+    let system = getSystemInfo(block, tx)
+    system.swapCount = system.swapCount.plus(BigInt.fromI32(1))
+    system.save()
+  }
+
+  return swap as Swap
+}
+
+// Gets poll info from swap contract
+export function getXSwapInfo(swap: Address): SwapInfo {
+  let swapContract = XSwapDeposit.bind(swap)
+
+  let tokens: Address[] = []
+  let baseTokens: Address[] = []
+  let balances: BigInt[] = []
+  let allTokens: Address[] = []
+
+  // get metapool tokens
+  let t: ethereum.CallResult<Address>
+  let b: ethereum.CallResult<BigInt>
+
+  let i = 0
+
+  do {
+    t = swapContract.try_UNDERLYING_COINS(new BigInt(i))
+    let tokenContract = ERC20.bind(t.value)
+    b = tokenContract.try_balanceOf(swap)
+
+    if (!t.reverted && t.value.toHexString() != ZERO_ADDRESS) {
+      tokens.push(t.value)
+    }
+
+    if (!b.reverted) {
+      balances.push(b.value)
+    }
+
+    i++
+  } while (!t.reverted && !b.reverted)
+
+  // get the lp token bounded basepool tokens
+  let baseSwapAddress = swapContract.BASE_POOL()
+  let baseSwapContract = SwapNormal.bind(baseSwapAddress)
+
+  let t2: ethereum.CallResult<Address>
+
+  let j = 0
+
+  do {
+    t2 = baseSwapContract.try_getToken(j)
+
+    if (!t2.reverted && t2.value.toHexString() != ZERO_ADDRESS) {
+      log.debug('{}: {}', [j.toString(), t2.value.toString()])
+      baseTokens.push(t2.value)
+    }
+
+    j++
+  } while (!t2.reverted)
+
+  // for xSwapDeposit, tokens equal allTokens
+  allTokens = tokens
+
+  return {
+    baseSwapAddress,
+    tokens,
+    baseTokens,
+    allTokens,
+    balances,
+    A: new BigInt(0),
+    swapFee: new BigInt(0),
+    adminFee: new BigInt(0),
+    virtualPrice: swapContract.priceOracle(),
+    owner: swapContract.owner(),
+    lpToken: swapContract.META_LPTOKEN(),
+  }
+}
+
+export function getBalancesXSwap(swap: Address, N_COINS: number): BigInt[] {
+  let swapContract = XSwapDeposit.bind(swap)
+  let balances = new Array<BigInt>(<i32>N_COINS)
+
+  for (let i = 0; i < N_COINS; ++i) {
+    let t = swapContract.UNDERLYING_COINS(new BigInt(i))
+    let tokenContract = ERC20.bind(t)
+    let b = tokenContract.balanceOf(swap)
+    balances[i] = b
   }
 
   return balances
