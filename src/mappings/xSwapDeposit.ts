@@ -50,7 +50,7 @@ export function handleAddLiquidity(event: AddLiquidity): void {
         balance,
         token.decimals.toI32(),
       )
-      if (tokens[i] == "0x431d5dff03120afa4bdf332c61a6e1766ef37bdb") {
+      if (tokens[i] == JPYC_ADDRESS) {
         tvl = tvl.plus(balanceDecimal.times(new BigDecimal(jpycPrice)))
       } else {
         tvl = tvl.plus(balanceDecimal)
@@ -81,9 +81,9 @@ export function handleAddLiquidity(event: AddLiquidity): void {
   log.swap = swap.id
   log.provider = event.params.provider
   log.tokenAmounts = event.params.tokenAmounts
-  // log.fees = event.params.fees
-  // log.invariant = event.params.invariant
-  // log.lpTokenSupply = event.params.lpTokenSupply
+  log.fees = []
+  log.invariant = new BigInt(0)
+  log.lpTokenSupply = new BigInt(0)
 
   log.block = event.block.number
   log.timestamp = event.block.timestamp
@@ -144,7 +144,7 @@ export function handleRemoveLiquidity(event: RemoveLiquidity): void {
   log.swap = swap.id
   log.provider = event.params.provider
   log.tokenAmounts = event.params.tokenAmounts
-  // log.lpTokenSupply = event.params.lpTokenSupply
+  log.lpTokenSupply = new BigInt(0)
 
   log.block = event.block.number
   log.timestamp = event.block.timestamp
@@ -214,7 +214,7 @@ export function handleRemoveLiquidityOne(event: RemoveLiquidityOne): void {
   log.swap = swap.id
   log.provider = event.params.provider
   log.tokenAmounts = tokenAmounts
-  // log.lpTokenSupply = event.params.lpTokenSupply
+  log.lpTokenSupply = new BigInt(0)
 
   log.block = event.block.number
   log.timestamp = event.block.timestamp
