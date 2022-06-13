@@ -212,42 +212,6 @@ dataSources:
       file: ./src/mappings/metaSwap.ts
   
   - kind: ethereum/contract
-    name: JPYCmetapoolDeposit
-    network: mainnet
-    source:
-      address: "0x3cd1Fa4EeeFdf6c30E66c66A474e8E4dd509f54c"
-      abi: XSwapDeposit
-      startBlock: 1099458
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      entities:
-        - Swap
-        - SystemInfo
-        - Token
-        - AddLiquidityEvent
-        - RemoveLiquidityEvent
-        - TokenExchange
-      abis:
-        - name: XSwapDeposit
-          file: ./abis/XSwapDeposit.json
-        - name: SwapNormal
-          file: ./abis/SwapNormal.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-      eventHandlers:
-        - event: AddLiquidity(indexed address,uint256[],uint256,uint256,uint256)
-          handler: handleAddLiquidity
-        - event: RemoveLiquidity(indexed address,uint256[2],uint256,uint256)
-          handler: handleRemoveLiquidity
-        - event: RemoveLiquidityOne(indexed address,uint256,uint256,uint256,uint256)
-          handler: handleRemoveLiquidityOne
-        - event: TokenExchange(indexed address,uint256,uint256,uint256,uint256,uint256)
-          handler: handleTokenSwap
-      file: ./src/mappings/xSwapDeposit.ts
-
-  - kind: ethereum/contract
     name: VotingEscrow
     network: mainnet
     source:
